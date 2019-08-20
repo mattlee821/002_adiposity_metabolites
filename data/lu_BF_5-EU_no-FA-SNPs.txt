@@ -1,0 +1,6 @@
+SNP	chr	position	gene	EA	EAF	OA	b	se	p	n	units	units_note
+rs1558902	16	52361075	FTO	A	0.41	T	0.051	0.005	1.10E-25	87924	SD/allele	b is the effect size expressed in SD/allele (i.e. following inverse normal transformation to mean of 0 and SD of 1)
+rs6857	19	50084094	TOMM40-APOE	C	0.83	T	0.053	0.009	6.80E-10	60210	SD/allele	b is the effect size expressed in SD/allele (i.e. following inverse normal transformation to mean of 0 and SD of 1)
+rs693839	13	79856289	SPRY2	C	0.31	T	0.03	0.005	9.30E-09	88773	SD/allele	b is the effect size expressed in SD/allele (i.e. following inverse normal transformation to mean of 0 and SD of 1)
+rs9906944	17	44446419	IGF2BP1	C	0.66	T	0.035	0.006	1.90E-08	64032	SD/allele	b is the effect size expressed in SD/allele (i.e. following inverse normal transformation to mean of 0 and SD of 1)
+rs6728726	2	613976	TMEM18	C	0.84	T	0.037	0.007	2.90E-08	89287	SD/allele	b is the effect size expressed in SD/allele (i.e. following inverse normal transformation to mean of 0 and SD of 1)

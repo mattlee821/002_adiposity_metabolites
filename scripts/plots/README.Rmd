@@ -1,0 +1,341 @@
+---
+#output: rmarkdown::github_document
+#output: word_document
+ output: 
+#   pdf_document: default
+   html_notebook: default
+# urlcolor: blue
+---
+
+# Forest plots of MR results
+
+```{r, eval=TRUE, include=FALSE, echo=FALSE, error=FALSE, message=FALSE, warning=FALSE, cache=TRUE, fig.align='center', comment=""}
+##### environment
+# devtools::install_github("NightingaleHealth/ggforestplot")
+directory_1 <- Sys.getenv("projects_local")
+setwd(directory_1)
+library(ggforestplot)
+library(ggplot2)
+library(cowplot)
+library(dplyr)
+library(tidyverse)
+source("scripts/ggplot_my_theme.R")
+
+##### data
+kettunen_list <- read.table("data/kettunen_metabolites.txt", header = T, sep = "\t")
+data1 <- read.table("analysis/combined/002_combined_kettunen.txt", header = T, sep = "\t")
+```
+
+
+```{r, eval=TRUE, include=FALSE, echo=FALSE, error=FALSE, message=FALSE, warning=FALSE, cache=TRUE, fig.align='center', comment=""}
+# Prepare data for BMI, BF%, WHR, and combined
+data2 <- left_join(data1, kettunen_list, by = "name")
+
+## Prepare combined exposure plot data using IVW
+BMI <- data2[,c(1:9, 22:33)]
+BMI$exposure <- "BMI"
+BF <- data2[,c(1:5, 10:13, 22:33)]
+BF$exposure <- "BF%"
+BFLu <- data2[,c(1:5, 14:17, 22:33)]
+BFLu$exposure <- "BF Lu %"
+WHR <- data2[,c(1:5, 18:33)]
+WHR$exposure <- "WHR"
+colnames(BMI)[6:9] <- c("n_SNP", "estimate", "se", "p")
+colnames(BF)[6:9] <- c("n_SNP", "estimate", "se", "p")
+colnames(BFLu)[6:9] <- c("n_SNP", "estimate", "se", "p")
+colnames(WHR)[6:9] <- c("n_SNP", "estimate", "se", "p")
+data3 <- rbind(BMI, BF, BFLu, WHR)
+
+BMI_IVW <- subset(data3 , method == "Inverse variance weighted (multiplicative random effects)" & exposure == "BMI")
+BMI_IVW <- BMI_IVW[order(BMI_IVW$metabolite_category, BMI_IVW$estimate),]
+BMI_IVW$order <- 1:123
+order <- BMI_IVW[,c(1,23)]
+data4 <- left_join(data3, order, by = "id.outcome")
+data5 <- subset(data4, method == "Inverse variance weighted (multiplicative random effects)")
+combined <- data5
+combined$exposure <- as.factor(combined$exposure)
+combined$exposure <- factor(combined$exposure, levels = c("WHR", "BF Lu %", "BF%", "BMI"))
+combined$exposure
+combined <- combined[order(combined$order),] 
+
+## Prepare data for individual exposure plot data
+IVW <- subset(data2, method == "Inverse variance weighted (multiplicative random effects)")
+IVW <- left_join(IVW, order, by = "id.outcome")
+IVW <- IVW[order(IVW$order),]
+egger <- subset(data2, method == "MR Egger")
+egger <-  left_join(egger, order, by = "id.outcome")
+egger <- egger[order(egger$order),]
+Weighted_median <- subset(data2, method == "Weighted median")
+Weighted_median <-  left_join(Weighted_median, order, by = "id.outcome")
+Weighted_median <- Weighted_median[order(Weighted_median$order),]
+Weighted_mode <- subset(data2, method == "Weighted mode")
+Weighted_mode <-  left_join(Weighted_mode, order, by = "id.outcome")
+Weighted_mode <- Weighted_mode[order(Weighted_mode$order),]
+
+data4 <- rbind(IVW, egger, Weighted_median, Weighted_mode)
+names(data4)
+BMI_methods <- data4[,c(1:5, 6:9, 22:34)]
+BF_methods <- data4[,c(1:5, 10:13, 22:34)]
+BFLu_methods <- data4[,c(1:5, 14:17, 22:34)]
+WHR_methods <- data4[,c(1:5, 18:21, 22:34)]
+
+names(BMI_methods)
+colnames(BMI_methods)[6:9] <- c("n_SNP", "estimate", "se", "p")
+colnames(BF_methods)[6:9] <- c("n_SNP", "estimate", "se", "p")
+colnames(BFLu_methods)[6:9] <- c("n_SNP", "estimate", "se", "p")
+colnames(WHR_methods)[6:9] <- c("n_SNP", "estimate", "se", "p")
+```
+
+```{r, eval=TRUE, include=FALSE, echo=FALSE, error=FALSE, message=FALSE, warning=FALSE, cache=TRUE, fig.align='center', comment=""}
+# Plotting specifics
+psignif <- 0.05/123
+ci <- 0.95
+```
+
+```{r, eval=TRUE, include=FALSE, echo=FALSE, error=FALSE, message=FALSE, warning=FALSE, cache=TRUE, fig.align='center', comment=""}
+combined_plots <- list()
+data_to_plot <- combined
+
+for (i in levels(data_to_plot$subclass)){
+  data <- subset(data_to_plot, subclass == i)
+
+  p <-   
+  forestplot(df = data, 
+             name = raw.label, 
+             estimate = estimate,
+             se = se, 
+             pvalue = p, 
+             colour = exposure, 
+             shape = NULL, 
+             logodds = FALSE, 
+             psignif = psignif, 
+             ci = ci, 
+             title = i,
+             xlab = "1-SD increment in exposure per 1-SD increment in metabolite") +
+    
+    theme(
+    legend.position = "bottom",
+    legend.title.align = 0,
+    legend.text.align = 0,
+    legend.title = element_blank(),
+    axis.title.x = element_text(hjust = 0, size = 10)
+  ) 
+
+  
+  plot_name <- paste0("p",i)
+  combined_plots[[plot_name]] <- p
+  
+}
+```
+
+```{r, eval=TRUE, include=FALSE, echo=FALSE, error=FALSE, message=FALSE, warning=FALSE, cache=TRUE, fig.align='center', comment=""}
+BMI_plots <- list()
+data_to_plot <- BMI_methods
+
+for (i in levels(data_to_plot$subclass)){
+  data <- subset(data_to_plot, subclass == i)
+
+  p <-   
+  forestplot(df = data, 
+             name = raw.label, 
+             estimate = estimate,
+             se = se, 
+             pvalue = p, 
+             colour = method, 
+             shape = NULL, 
+             logodds = FALSE, 
+             psignif = psignif, 
+             ci = ci, 
+             title = i,
+             xlab = "1-SD increment in BMI per 1-SD increment in metabolite") +
+    
+    theme(
+    legend.position = "bottom",
+    legend.title.align = 0,
+    legend.text.align = 0,
+    legend.title = element_blank(),
+    axis.title.x = element_text(hjust = 0, size = 10)
+  ) 
+
+  
+  plot_name <- paste0("p",i)
+  BMI_plots[[plot_name]] <- p
+  
+}
+```
+
+```{r, eval=TRUE, include=FALSE, echo=FALSE, error=FALSE, message=FALSE, warning=FALSE, cache=TRUE, fig.align='center', comment=""}
+BF_plots <- list()
+data_to_plot <- BF_methods
+
+for (i in levels(data_to_plot$subclass)){
+  data <- subset(data_to_plot, subclass == i)
+
+  p <-   
+  forestplot(df = data, 
+             name = raw.label, 
+             estimate = estimate,
+             se = se, 
+             pvalue = p, 
+             colour = method, 
+             shape = NULL, 
+             logodds = FALSE, 
+             psignif = psignif, 
+             ci = ci, 
+             title = i,
+             xlab = "1-SD increment in BF% per 1-SD increment in metabolite") +
+    
+    theme(
+    legend.position = "bottom",
+    legend.title.align = 0,
+    legend.text.align = 0,
+    legend.title = element_blank(),
+    axis.title.x = element_text(hjust = 0, size = 10)
+  ) 
+
+  
+  plot_name <- paste0("p",i)
+  BF_plots[[plot_name]] <- p
+  
+}
+```
+
+```{r, eval=TRUE, include=FALSE, echo=FALSE, error=FALSE, message=FALSE, warning=FALSE, cache=TRUE, fig.align='center', comment=""}
+BFLu_plots <- list()
+data_to_plot <- BFLu_methods
+
+for (i in levels(data_to_plot$subclass)){
+  data <- subset(data_to_plot, subclass == i)
+
+  p <-   
+  forestplot(df = data, 
+             name = raw.label, 
+             estimate = estimate,
+             se = se, 
+             pvalue = p, 
+             colour = method, 
+             shape = NULL, 
+             logodds = FALSE, 
+             psignif = psignif, 
+             ci = ci, 
+             title = i,
+             xlab = "1-SD increment in BF Lu % per 1-SD increment in metabolite") +
+    
+    theme(
+    legend.position = "bottom",
+    legend.title.align = 0,
+    legend.text.align = 0,
+    legend.title = element_blank(),
+    axis.title.x = element_text(hjust = 0, size = 10)
+  ) 
+
+  
+  plot_name <- paste0("p",i)
+  BFLu_plots[[plot_name]] <- p
+  
+}
+```
+
+```{r, eval=TRUE, include=FALSE, echo=FALSE, error=FALSE, message=FALSE, warning=FALSE, cache=TRUE, fig.align='center', comment=""}
+WHR_plots <- list()
+data_to_plot <- WHR_methods
+
+for (i in levels(data_to_plot$subclass)){
+  data <- subset(data_to_plot, subclass == i)
+
+  p <-   
+  forestplot(df = data, 
+             name = raw.label, 
+             estimate = estimate,
+             se = se, 
+             pvalue = p, 
+             colour = method, 
+             shape = NULL, 
+             logodds = FALSE, 
+             psignif = psignif, 
+             ci = ci, 
+             title = i,
+             xlab = "1-SD increment in WHR per 1-SD increment in metabolite") +
+    
+    theme(
+    legend.position = "bottom",
+    legend.title.align = 0,
+    legend.text.align = 0,
+    legend.title = element_blank(),
+    axis.title.x = element_text(hjust = 0, size = 10)
+  ) 
+
+  
+  plot_name <- paste0("p",i)
+  WHR_plots[[plot_name]] <- p
+  
+}
+```
+
+## Descriptives {.tabset}
+```{r, eval=TRUE, include=TRUE, echo=FALSE, error=FALSE, message=FALSE, warning=FALSE, cache=TRUE, fig.align='center', comment=""}
+BMI <- subset(combined, exposure == "BMI" )
+BF <- subset(combined, exposure == "BF%" )
+BFLu <- subset(combined, exposure == "BF Lu %" )
+WHR <- subset(combined, exposure == "WHR" )
+```
+
+### How many combined associations reach significance (0.05/123)
+```{r, eval=TRUE, include=TRUE, echo=FALSE, error=FALSE, message=FALSE, warning=FALSE, cache=TRUE, fig.align='center', comment=""}
+nrow(subset(WHR, p < psignif))
+```
+
+### How many BMI associations reach significance (0.05/123)
+```{r, eval=TRUE, include=TRUE, echo=FALSE, error=FALSE, message=FALSE, warning=FALSE, cache=TRUE, fig.align='center', comment=""}
+nrow(subset(BMI, p < psignif))
+```
+
+### How many BF associations reach significance (0.05/123)
+```{r, eval=TRUE, include=TRUE, echo=FALSE, error=FALSE, message=FALSE, warning=FALSE, cache=TRUE, fig.align='center', comment=""}
+nrow(subset(BF, p < psignif))
+```
+
+### How many BFLu associations reach significance (0.05/123)
+```{r, eval=TRUE, include=TRUE, echo=FALSE, error=FALSE, message=FALSE, warning=FALSE, cache=TRUE, fig.align='center', comment=""}
+nrow(subset(BFLu, p < psignif))
+```
+
+### How many WHR associations reach significance (0.05/123)
+```{r, eval=TRUE, include=TRUE, echo=FALSE, error=FALSE, message=FALSE, warning=FALSE, cache=TRUE, fig.align='center', comment=""}
+nrow(subset(WHR, p < psignif))
+```
+
+\  
+
+## Forest plot associations {.tabset}
+
+### Association of exposures and metabolites
+```{r, eval=TRUE, include=TRUE, echo=FALSE, error=FALSE, message=FALSE, warning=FALSE, cache=TRUE, fig.align='center', comment=""}
+combined_plots
+```
+
+### Association of BMI and metabolites
+```{r, eval=TRUE, include=TRUE, echo=FALSE, error=FALSE, message=FALSE, warning=FALSE, cache=TRUE, fig.align='center', comment=""}
+BMI_plots
+```
+
+### Association of BF% and metabolites
+```{r, eval=TRUE, include=TRUE, echo=FALSE, error=FALSE, message=FALSE, warning=FALSE, cache=TRUE, fig.align='center', comment=""}
+BF_plots
+```
+
+### Association of BF Lu % and metabolites
+```{r, eval=TRUE, include=TRUE, echo=FALSE, error=FALSE, message=FALSE, warning=FALSE, cache=TRUE, fig.align='center', comment=""}
+BFLu_plots
+```
+
+### Association of WHR and metabolites
+```{r, eval=TRUE, include=TRUE, echo=FALSE, error=FALSE, message=FALSE, warning=FALSE, cache=TRUE, fig.align='center', comment=""}
+WHR_plots
+```
+
+
+
+
+
+
