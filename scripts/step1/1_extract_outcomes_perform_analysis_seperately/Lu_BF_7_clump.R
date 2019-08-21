@@ -100,17 +100,17 @@ mr_pleiotropy_kettunen_clump <- mr_pleiotropy_test(harmonise_data_kettunen_clump
 mr_leaveoneout_kettunen_clump <- mr_leaveoneout(harmonise_data_kettunen_clump)
 
 ## Plots ====
-harmonise_data_shin_scatter_plot <- subset(harmonise_data_shin_clump, table(harmonise_data_shin$id.outcome) >= 2)
-plot_mr_scatter_shin <- my_mr_scatter_plot(mr_results_shin, harmonise_data_shin_scatter_plot)
-plot_singlesnp_forest_shin <- mr_forest_plot(mr_singlesnp_shin)
-plot_leaveoneout_forest_shin <- mr_leaveoneout_plot(mr_leaveoneout_shin)
-plot_mr_funnel_shin <- mr_funnel_plot(mr_singlesnp_shin)
+harmonise_data_shin_scatter_plot <- subset(harmonise_data_shin_clump, table(harmonise_data_shin_clump$id.outcome) >= 2)
+plot_mr_scatter_shin <- my_mr_scatter_plot(mr_results_shin_clump, harmonise_data_shin_scatter_plot)
+plot_singlesnp_forest_shin <- mr_forest_plot(mr_singlesnp_shin_clump)
+plot_leaveoneout_forest_shin <- mr_leaveoneout_plot(mr_leaveoneout_shin_clump
+plot_mr_funnel_shin <- mr_funnel_plot(mr_singlesnp_shin_clump)
 
-harmonise_data_kettunen_scatter_plot <- subset(harmonise_data_kettunen_clump, table(harmonise_data_kettunen$id.outcome) >= 2)
-plot_mr_scatter_kettunen <- my_mr_scatter_plot(mr_results_kettunen, harmonise_data_kettunen_scatter_plot)
-plot_singlesnp_forest_kettunen <- mr_forest_plot(mr_singlesnp_kettunen)
-plot_leaveoneout_forest_kettunen <- mr_leaveoneout_plot(mr_leaveoneout_kettunen)
-plot_mr_funnel_kettunen <- mr_funnel_plot(mr_singlesnp_kettunen)
+harmonise_data_kettunen_scatter_plot <- subset(harmonise_data_kettunen_clump, table(harmonise_data_kettunen_clump$id.outcome) >= 2)
+plot_mr_scatter_kettunen <- my_mr_scatter_plot(mr_results_kettunen_clump, harmonise_data_kettunen_scatter_plot)
+plot_singlesnp_forest_kettunen <- mr_forest_plot(mr_singlesnp_kettunen_clump)
+plot_leaveoneout_forest_kettunen <- mr_leaveoneout_plot(mr_leaveoneout_kettunen_clump)
+plot_mr_funnel_kettunen <- mr_funnel_plot(mr_singlesnp_kettunen_clump)
 
 ### save plots ====
 pdf("002_adiposity_metabolites/analysis/step1/BF_Lu_7/plot_mr_scatter_shin_clump.pdf")
