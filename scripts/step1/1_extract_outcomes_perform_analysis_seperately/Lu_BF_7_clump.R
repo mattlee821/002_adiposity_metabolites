@@ -103,7 +103,7 @@ mr_leaveoneout_kettunen_clump <- mr_leaveoneout(harmonise_data_kettunen_clump)
 harmonise_data_shin_scatter_plot <- subset(harmonise_data_shin_clump, table(harmonise_data_shin_clump$id.outcome) >= 2)
 plot_mr_scatter_shin <- my_mr_scatter_plot(mr_results_shin_clump, harmonise_data_shin_scatter_plot)
 plot_singlesnp_forest_shin <- mr_forest_plot(mr_singlesnp_shin_clump)
-plot_leaveoneout_forest_shin <- mr_leaveoneout_plot(mr_leaveoneout_shin_clump
+plot_leaveoneout_forest_shin <- mr_leaveoneout_plot(mr_leaveoneout_shin_clump)
 plot_mr_funnel_shin <- mr_funnel_plot(mr_singlesnp_shin_clump)
 
 harmonise_data_kettunen_scatter_plot <- subset(harmonise_data_kettunen_clump, table(harmonise_data_kettunen_clump$id.outcome) >= 2)
