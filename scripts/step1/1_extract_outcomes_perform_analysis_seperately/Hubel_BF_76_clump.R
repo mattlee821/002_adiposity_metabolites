@@ -161,6 +161,10 @@ dev.off()
 ## Save output ====
 write.table(exposure_data_clump, "002_adiposity_metabolites/analysis/step1/BF_Hubel_76/exposure_data_clump.txt", 
             row.names = FALSE, col.names = TRUE, quote = FALSE, sep = "\t")
+write.table(harmonise_data_shin_clump, "002_adiposity_metabolites/analysis/step1/BF_Hubel_76/harmonise_data_shin_clump.txt", 
+            row.names = FALSE, col.names = TRUE, quote = FALSE, sep = "\t")
+write.table(harmonise_data_kettunen_clump, "002_adiposity_metabolites/analysis/step1/BF_Hubel_76/harmonise_data_kettunen_clump.txt", 
+            row.names = FALSE, col.names = TRUE, quote = FALSE, sep = "\t")
 write.table(mr_results_shin_clump, "002_adiposity_metabolites/analysis/step1/BF_Hubel_76/mr_results_shin_clump.txt", 
             row.names = FALSE, col.names = TRUE, quote = FALSE, sep = "\t")
 write.table(mr_results_kettunen_clump, "002_adiposity_metabolites/analysis/step1/BF_Hubel_76/mr_results_kettunen_clump.txt", 
