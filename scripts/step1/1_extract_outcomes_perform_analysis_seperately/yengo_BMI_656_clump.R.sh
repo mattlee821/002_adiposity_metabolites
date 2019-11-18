@@ -6,7 +6,7 @@
 #PBS -o log/
 
 # set environment arguments 
-source ../../environment/environment.sh
+source ../../../environment/environment.sh
 # must also set a .Renviron file in the same location as the script
 
 # working directory
