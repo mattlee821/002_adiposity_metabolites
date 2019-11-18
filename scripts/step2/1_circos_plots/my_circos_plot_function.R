@@ -154,7 +154,7 @@ my_circos_plot <- function(track_number,
       xpd = NA) #A logical value or NA. If FALSE, all plotting is clipped to the plot region, if TRUE, all plotting is clipped to the figure region, and if NA, all plotting is clipped to the device region. See also clip.
   
   ### set the circle page that you will layer on top of the blank page above
-  circos.par(cell.padding = c(0, 0.5, 0, 0.5), 
+  circos.par(cell.padding = c(0.02, 0, 0.02, 0), 
              start.degree = start_degree, # starting point of the circle
              gap.degree = gap, # gap between two neighbour sections
              track.margin = c(0.012, 0.012), #blank area outside of the plotting area
@@ -505,7 +505,7 @@ my_circos_plot <- function(track_number,
   if(legend == TRUE && track_number == 1){
     
     legend1 <- Legend(at = c(track2_label),
-                      labels_gp = gpar(fontsize = 15),
+                      labels_gp = gpar(fontsize = 24, fontface = "bold"),
                       ncol = 1,
                       border = NA, # color of legend borders, also for the ticks in the continuous legend
                       background = NA, # background colors
@@ -521,7 +521,7 @@ my_circos_plot <- function(track_number,
   if(legend == TRUE && track_number >= 2){
     
     legend1 <- Legend(at = c(track2_label, track3_label),
-                      labels_gp = gpar(fontsize = 15),
+                      labels_gp = gpar(fontsize = 24, fontface = "bold"),
                       ncol = 1,
                       border = NA, # color of legend borders, also for the ticks in the continuous legend
                       background = NA, # background colors
@@ -537,7 +537,7 @@ my_circos_plot <- function(track_number,
   if(legend == TRUE && track_number >= 3){
     
     legend1 <- Legend(at = c(track2_label, track3_label, track4_label),
-                      labels_gp = gpar(fontsize = 15),
+                      labels_gp = gpar(fontsize = 24, fontface = "bold"),
                       ncol = 1,
                       border = NA, # color of legend borders, also for the ticks in the continuous legend
                       background = NA, # background colors
@@ -553,7 +553,7 @@ my_circos_plot <- function(track_number,
   if(legend == TRUE){
     
     legend2 <- Legend(at = pvalue_label, # breaks, can be wither numeric or character
-                      labels_gp = gpar(fontsize = 15),
+                      labels_gp = gpar(fontsize = 24, fontface = "bold"),
                       ncol = 1,
                       border = NA, # color of legend borders, also for the ticks in the continuous legend
                       background = NA, # background colors
@@ -567,9 +567,9 @@ my_circos_plot <- function(track_number,
     
     ## 6.C - Assign legend section labelling
     names <- levels(as.factor(data[[section_column]]))
-    names <- paste(1:28, names, sep=". ")
+    names <- paste(1:nlevels(data[[section_column]]), names, sep=". ")
     legend3 <- Legend(at = names,
-                      labels_gp = gpar(fontsize = 15),
+                      labels_gp = gpar(fontsize = 24, fontface = "bold"),
                       nrow = 4,
                       ncol = 7,
                       border = NA, # color of legend borders, also for the ticks in the continuous legend

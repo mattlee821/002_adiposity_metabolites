@@ -19,16 +19,8 @@ ao <- available_outcomes(access_token=NULL)
 
 ### methods
 methods <- mr_method_list()
-methods_heterogeneity <- subset(methods, heterogeneity_test == TRUE)
-methods <- subset(methods, obj != "mr_ivw_radial")
-methods <- subset(methods, obj != "mr_raps")
-methods <- methods$obj
-methods_heterogeneity <- methods_heterogeneity$obj
-
-#install_github("WSpiller/RadialMR")
-library(RadialMR)
-#install_github("qingyuanzhao/mr.raps")
-library(mr.raps)
+methods_mr <- methods[c(3,6,10,13),1]
+methods_heterogeneity <- subset(methods, heterogeneity_test == TRUE)$obj
 
 ### colours
 #install.packages("wesanderson")
@@ -39,6 +31,7 @@ d3 <- wes_palette("Cavalcanti1", type = "discrete")
 d4 <- wes_palette("Rushmore1", type = "discrete")
 discrete_wes_pal <- c(d1, d2, d3, d4)
 rm(d1,d2,d3,d4)
+
 ### source other scripts
 source("002_adiposity_metabolites/scripts/my_mr_scatter_plot.R")
 

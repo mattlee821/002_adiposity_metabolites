@@ -19,16 +19,8 @@ ao <- available_outcomes(access_token=NULL)
 
 ### methods
 methods <- mr_method_list()
-methods_heterogeneity <- subset(methods, heterogeneity_test == TRUE)
-methods <- subset(methods, obj != "mr_ivw_radial")
-methods <- subset(methods, obj != "mr_raps")
-methods <- methods$obj
-methods_heterogeneity <- methods_heterogeneity$obj
-
-#install_github("WSpiller/RadialMR")
-library(RadialMR)
-#install_github("qingyuanzhao/mr.raps")
-library(mr.raps)
+methods_mr <- methods[c(3,6,10,13),1]
+methods_heterogeneity <- subset(methods, heterogeneity_test == TRUE)$obj
 
 ### colours
 #install.packages("wesanderson")
