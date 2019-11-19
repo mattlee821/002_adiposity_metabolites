@@ -16,4 +16,4 @@ module add languages/R-3.5.1-ATLAS-gcc-6.1
 
 VAR1=Hubel_BF_76_clump.R
 
-Rscript ${directory_1}002_adiposity_metabolites/scripts/step1/${VAR1}
+Rscript ${directory_1}002_adiposity_metabolites/scripts/step1/1_extract_outcomes_perform_analysis_combined/${VAR1}
