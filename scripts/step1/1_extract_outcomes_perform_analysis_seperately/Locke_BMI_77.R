@@ -50,9 +50,13 @@ exposure_data <- read_exposure_data("002_adiposity_metabolites/data/locke_BMI_77
                                     pval_col = "p",
                                     samplesize_col = "n",
                                     min_pval = 5e-8)
-exposure_data$units <- "SD (kg/m^2)"
 exposure_data$exposure <- "Locke BMI EU sex combined 77 SNPs"
 exposure_data$id.exposure <- "Locke BMI EU sex combined 77 SNPs"
+
+## calculate individual and mean SNP f-statistic
+exposure_data$f_stats <- (exposure_data$b / exposure_data$se)^2 
+exposure_data$mean_fstat <- mean(exposure_data$f_stats)
+
 
 ## extract outcome data ====
 outcome_data_shin <- read.table("002_adiposity_metabolites/analysis/step1/BMI_Locke_77/outcome_data_shin.txt", header = T, sep = "\t")

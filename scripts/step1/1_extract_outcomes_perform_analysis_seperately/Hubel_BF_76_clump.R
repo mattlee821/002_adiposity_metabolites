@@ -61,6 +61,11 @@ exposure_data_clump <- clump_data(exposure_data,
                                   clump_kb = 10000,
                                   clump_r2 = 0.001)
 
+## calculate individual and mean SNP f-statistic
+exposure_data$f_stats <- (exposure_data$b / exposure_data$se)^2 
+exposure_data$mean_fstat <- mean(exposure_data$f_stats)
+
+
 ## extract outcome data ====
 outcome_data_shin_clump <- read.table("002_adiposity_metabolites/analysis/step1/BF_Hubel_76/outcome_data_shin_clump.txt", header = T, sep = "\t")
 outcome_data_kettunen_clump <- read.table("002_adiposity_metabolites/analysis/step1/BF_Hubel_76/outcome_data_kettunen_clump.txt", header = T, sep = "\t")

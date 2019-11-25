@@ -50,7 +50,7 @@ exposure_data <- read_exposure_data("002_adiposity_metabolites/data/yengo_BMI_65
                                     pval_col = "P",
                                     samplesize_col = "N",
                                     min_pval = 1e-8)
-exposure_data$units <- "SD (kg/m^2)"
+
 exposure_data$exposure <- "Yengo BMI EU sex combined 656 SNPs"
 exposure_data$id.exposure <- "Yengo BMI EU sex combined 656 SNPs"
 
@@ -60,6 +60,11 @@ head(exposure_data)
 exposure_data_clump <- clump_data(exposure_data,
                                   clump_kb = 10000,
                                   clump_r2 = 0.001)
+
+## calculate individual and mean SNP f-statistic
+exposure_data$f_stats <- (exposure_data$b / exposure_data$se)^2 
+exposure_data$mean_fstat <- mean(exposure_data$f_stats)
+
 
 ## extract outcome data ====
 outcome_data_shin_clump <- read.table("002_adiposity_metabolites/analysis/step1/BMI_Yengo_656/outcome_data_shin_clump.txt", header = T, sep = "\t")

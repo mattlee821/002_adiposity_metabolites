@@ -56,6 +56,11 @@ exposure_data$id.exposure <- "Shungin WHRadjBMI EU sex combined 53 SNPs"
 dim(exposure_data)
 head(exposure_data)
 
+## calculate individual and mean SNP f-statistic
+exposure_data$f_stats <- (exposure_data$b / exposure_data$se)^2 
+exposure_data$mean_fstat <- mean(exposure_data$f_stats)
+
+
 ## extract outcome data ====
 outcome_data_shin <- read.table("002_adiposity_metabolites/analysis/step1/WHRadjBMI_Shungin_53/outcome_data_shin.txt", header = T, sep = "\t")
 outcome_data_kettunen <- read.table("002_adiposity_metabolites/analysis/step1/WHRadjBMI_Shungin_53/outcome_data_kettunen.txt", header = T, sep = "\t")
