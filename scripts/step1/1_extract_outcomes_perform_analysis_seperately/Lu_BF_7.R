@@ -20,6 +20,7 @@ ao <- available_outcomes(access_token=NULL)
 ### methods
 methods <- mr_method_list()
 methods_heterogeneity <- subset(methods, heterogeneity_test == TRUE)$obj
+methods_heterogeneity <- methods_heterogeneity[c(1,2,3,5)]
 methods <- methods[c(3,6,10,13),1]
 
 ### colours
