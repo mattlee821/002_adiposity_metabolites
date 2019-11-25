@@ -50,8 +50,8 @@ exposure_data <- read_exposure_data("002_adiposity_metabolites/data/shungin_WHR_
                                     pval_col = "WHR_EU_SC_meta_analysis_P",
                                     samplesize_col = "WHR_EU_SC_meta_analysis_N",
                                     min_pval = 5e-8)
-exposure_data$exposure <- "Shungin WHR EU sex combined 26 SNPs"
-exposure_data$id.exposure <- "Shungin WHR EU sex combined 26 SNPs"
+exposure_data$exposure <- "Shungin WHR EU sex combined 26 SNPs clumped"
+exposure_data$id.exposure <- "Shungin WHR EU sex combined 26 SNPs clumped"
 
 dim(exposure_data)
 head(exposure_data)

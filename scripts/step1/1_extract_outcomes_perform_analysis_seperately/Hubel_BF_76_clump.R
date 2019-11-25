@@ -51,8 +51,8 @@ exposure_data <- read_exposure_data("002_adiposity_metabolites/data/hubel_BF_76.
                                     #samplesize_col = "N",
                                     min_pval = 5e-8)
 
-exposure_data$exposure <- "Hubel BF EU sex combined 76 SNPs"
-exposure_data$id.exposure <- "Hubel BF EU sex combined 76 SNPs"
+exposure_data$exposure <- "Hubel BF EU sex combined 76 SNPs clumped"
+exposure_data$id.exposure <- "Hubel BF EU sex combined 76 SNPs clumped"
 
 dim(exposure_data)
 head(exposure_data)

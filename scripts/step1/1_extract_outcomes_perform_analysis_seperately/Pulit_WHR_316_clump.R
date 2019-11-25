@@ -50,8 +50,8 @@ exposure_data <- read_exposure_data("002_adiposity_metabolites/data/pulit_WHR_31
                                     pval_col = "pval.combined",
                                     samplesize_col = "nmeta.combined",
                                     min_pval = 5e-8)
-exposure_data$exposure <- "Pulit WHR EU sex combined 316 SNPs"
-exposure_data$id.exposure <- "Pulit WHR EU sex combined 316 SNPs"
+exposure_data$exposure <- "Pulit WHR EU sex combined 316 SNPs clumped"
+exposure_data$id.exposure <- "Pulit WHR EU sex combined 316 SNPs clumped"
 
 dim(exposure_data)
 head(exposure_data)

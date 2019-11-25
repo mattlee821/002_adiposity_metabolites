@@ -54,8 +54,8 @@ exposure_data <- read_exposure_data("002_adiposity_metabolites/data/lu_BF_5-EU_n
                                     gene_col = "gene",
                                     min_pval = 5e-8)
 
-exposure_data$exposure <- "Lu BF EU sex combined 5 SNPs"
-exposure_data$id.exposure <- "Lu BF EU sex combined 5 SNPs"
+exposure_data$exposure <- "Lu BF EU sex combined 5 SNPs clumped"
+exposure_data$id.exposure <- "Lu BF EU sex combined 5 SNPs clumped"
 
 dim(exposure_data)
 head(exposure_data)

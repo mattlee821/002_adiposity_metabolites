@@ -51,8 +51,8 @@ exposure_data <- read_exposure_data("002_adiposity_metabolites/data/locke_BMI_77
                                     samplesize_col = "n",
                                     min_pval = 5e-8)
 exposure_data$units <- "SD (kg/m^2)"
-exposure_data$exposure <- "Locke BMI EU sex combined 77 SNPs"
-exposure_data$id.exposure <- "Locke BMI EU sex combined 77 SNPs"
+exposure_data$exposure <- "Locke BMI EU sex combined 77 SNPs clumped"
+exposure_data$id.exposure <- "Locke BMI EU sex combined 77 SNPs clumped"
 
 dim(exposure_data)
 head(exposure_data)

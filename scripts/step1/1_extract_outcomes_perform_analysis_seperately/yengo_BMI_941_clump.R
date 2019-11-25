@@ -50,8 +50,8 @@ exposure_data <- read_exposure_data("002_adiposity_metabolites/data/yengo_BMI_94
                                     samplesize_col = "N",
                                     min_pval = 5e-8)
 
-exposure_data$exposure <- "Yengo BMI EU sex combined 941 SNPs"
-exposure_data$id.exposure <- "Yengo BMI EU sex combined 941 SNPs"
+exposure_data$exposure <- "Yengo BMI EU sex combined 941 SNPs clumped"
+exposure_data$id.exposure <- "Yengo BMI EU sex combined 941 SNPs clumped"
 
 dim(exposure_data)
 head(exposure_data)
