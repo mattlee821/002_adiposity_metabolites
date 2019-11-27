@@ -56,14 +56,14 @@ exposure_data$id.exposure <- "Shungin WHR EU sex combined 26 SNPs clumped"
 dim(exposure_data)
 head(exposure_data)
 
-## calculate individual and mean SNP f-statistic
-exposure_data$f_stats <- (exposure_data$b / exposure_data$se)^2 
-exposure_data$mean_fstat <- mean(exposure_data$f_stats)
-
-
 exposure_data_clump <- clump_data(exposure_data,
                                   clump_kb = 10000,
                                   clump_r2 = 0.001)
+
+## calculate individual and mean SNP f-statistic
+exposure_data_clump$f_stats <- (exposure_data_clump$b / exposure_data_clump$se)^2 
+exposure_data_clump$mean_fstat <- mean(exposure_data_clump$f_stats)
+
 
 ## extract outcome data ====
 outcome_data_shin_clump <- read.table("002_adiposity_metabolites/analysis/step1/WHR_Shungin_26/outcome_data_shin_clump.txt", header = T, sep = "\t")
