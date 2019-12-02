@@ -14,7 +14,7 @@ cd ${directory_1}002_adiposity_metabolites/scripts
 
 module add languages/R-3.5.1-ATLAS-gcc-6.1
 
-VAR1=extract_exposure_outcome_data.R
+VAR1=extract_exposure_data.R
 
 Rscript ${directory_1}002_adiposity_metabolites/scripts/step3/${VAR1}
 

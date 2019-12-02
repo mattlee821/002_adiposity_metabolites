@@ -1,4 +1,4 @@
-# MR analysis of measures of adiposity and metabolites 
+# Extract exposure data for metabolites
 
 # environment ====
 ## library ====
